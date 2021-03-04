@@ -1,6 +1,23 @@
 "use strict";
 
 //Destructuring
+const weekday = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+
+const openingHours = {
+  [weekday[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekday[4]]: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0,
+    close: 24,
+  },
+};
+
 const restaurant = {
   restName: "Classico Italiano",
   location: "Via Angelo Tavanti 23, Firenze, Italy",
@@ -8,34 +25,16 @@ const restaurant = {
   starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese salad"],
   mainMenu: ["Pizza", "Pasta", "Risotto"],
   numGuests: undefined,
-  order: function (starterIndex, mainIndex) {
+  openingHours,
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0,
-      close: 24,
-    },
-  },
-  orderDelivery: function ({
-    starterIndex = 1,
-    mainIndex = 1,
-    time = "20:00",
-    address,
-  }) {
+  orderDelivery({ starterIndex = 1, mainIndex = 1, time = "20:00", address }) {
     console.log(
       `Order received: ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered at ${address} at ${time}`
     );
   },
-  orderPasta: function (ing1, ing2, ing3) {
+  orderPasta(ing1, ing2, ing3) {
     console.log(`Here is your pasta with ${ing1},${ing2}, ${ing3}`);
   },
 };
@@ -75,7 +74,7 @@ const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r);
 
 //Destructuring objects
-const { restName, categories, openingHours } = restaurant;
+const { restName, categories, openingHours1 } = restaurant;
 console.log(restName, categories, openingHours);
 
 const {
@@ -180,6 +179,28 @@ console.log(guestsCorrect);
 const menu2 = [...restaurant.mainMenu, ...restaurant.starterMenu];
 
 for (let item of menu2) console.log(item);
+
 for (let item of menu2.entries()) {
-  console.log(item);
+  console.log(`${item[0] + 1}: ${item[1]}`);
 }
+
+for (let [i, el] of menu2.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+
+//OPtional chaining
+if (restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open);
+
+console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours?.mon?.open);
+
+for (const day of weekday) {
+  const open = restaurant.openingHours[day]?.open ?? "closed";
+  console.log(`On ${day}, we are ${open}`);
+}
+
+console.log(restaurant.order?.(0, 1) ?? "Method does not exist");
+console.log(restaurant.orderRisotto?.(0, 1) ?? "Method does not exist");
+
+const users = [{ name: "Liza", email: "littled685@gmail.com" }];
+console.log(users[0]?.name ?? "User array empty");
