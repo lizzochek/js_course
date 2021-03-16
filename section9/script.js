@@ -189,6 +189,7 @@ for (let [i, el] of menu2.entries()) {
 }
 
 //OPtional chaining
+/*
 if (restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open);
 
 console.log(restaurant.openingHours.mon?.open);
@@ -204,3 +205,155 @@ console.log(restaurant.orderRisotto?.(0, 1) ?? "Method does not exist");
 
 const users = [{ name: "Liza", email: "littled685@gmail.com" }];
 console.log(users[0]?.name ?? "User array empty");
+*/
+
+for (const day of Object.keys(openingHours)) {
+  console.log(day);
+}
+
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} day: `;
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+const values = Object.values(openingHours);
+console.log(values);
+
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+//Sets
+
+const orderSets = new Set(["Pasta", "Pizza", "Risotto", "Pizza", "Pasta"]);
+console.log(orderSets);
+
+console.log(new Set("Liza"));
+console.log(orderSets.has("Pizza"));
+console.log(orderSets.has("Bread"));
+orderSets.add("Garlic bread");
+orderSets.delete("Risotto");
+
+for (const order of orderSets) console.log(order);
+
+const staff = ["Waiter", "Chef", "Waiter", "Manager", "Chef", "Waiter"];
+const unique = [...new Set(staff)];
+console.log(unique);
+
+//Maps
+
+const rest = new Map();
+rest.set("name", "Classico Italiano");
+rest.set(1, "Italy").set(true, "Melicca");
+console.log(rest);
+console.log(rest.get(1));
+
+console.log(rest.has("categories"));
+rest.delete(1);
+const arrMap = [1, 2];
+rest.set(arrMap, "array");
+console.log(rest);
+console.log(rest.get(arrMap));
+
+const question = new Map([
+  //Same structure as returned from Object.entries()
+  ["question", "What is the best programming language?"],
+  [1, "C"],
+  [2, "Java"],
+  [3, "JavaScript"],
+  ["correct", 3],
+  [true, "Correct"],
+  [false, "Try again"],
+]);
+console.log(question);
+
+const hoursOpen = new Map(Object.entries(openingHours));
+console.log(hoursOpen);
+
+for (const [key, value] of question) {
+  if (typeof key === " number") console.log(`Answer ${key}: ${value}`);
+}
+let answer = 5;
+let str1 = question.get(answer === question.get("correct"));
+console.log(str1);
+
+console.log([...question]);
+//entries, keys and values methods can be used
+
+//Strings
+
+const airline = "Ukraine airlines";
+const plane = "A320";
+console.log(plane[1]);
+console.log(plane.length);
+console.log(airline.indexOf("r"));
+console.log(airline.lastIndexOf("r"));
+
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(" ")));
+console.log(airline.slice(airline.lastIndexOf(" ") + 1));
+console.log(airline.slice(-2));
+console.log(airline.slice(2, -2));
+console.log(airline.replace(/i/g, "B"));
+//Works with newer node versions
+console.log(airline.replaceAll("i", "B"));
+
+const checkMiddleSit = (seat) => {
+  //B or E are middle sits
+  const s = seat.slice(-1);
+  if (s === "B" || s === "E") console.log("You got a middle sit");
+  else console.log("You are lucky");
+};
+checkMiddleSit("11C");
+checkMiddleSit("23E");
+
+//str.includes(), str.startsWith(), str.endsWith()
+const checkBaggage = (items) => {
+  const baggage = items.toLowerCase();
+  if (baggage.includes("knife") || baggage.includes("gun")) {
+    console.log("You are not aloud on board");
+  } else {
+    console.log("Welcome");
+  }
+};
+
+checkBaggage("I have an apple and a Knife");
+checkBaggage("I've got a pen and a pencil");
+checkBaggage("A gun");
+
+//split, join
+function capitalizeName(name) {
+  const names = name.split(" ");
+  const namesUpper = [];
+  for (const n of names) {
+    namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    //namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(namesUpper.join(" "));
+}
+
+capitalizeName("liza dolgova");
+
+//Prolongs a string with a chosen part (+) to a chosen length (25)
+const message = "Go to gate 23";
+console.log(message.padStart(25, "+"));
+
+const maskCreditCard = function (number) {
+  const str = number.toString();
+  const last = str.slice(-4);
+  return last.padStart(str.length, "*");
+};
+
+console.log(maskCreditCard(1234123412341234));
+console.log(maskCreditCard("1234123412341234"));
+
+const mes = "Hello there... ";
+console.log(mes.repeat(5));
