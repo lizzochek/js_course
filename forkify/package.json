@@ -2,14 +2,14 @@
   "name": "forkify",
   "version": "1.0.0",
   "description": "Recipe app",
-  "main": "index.html",
+  "default": "index.html",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lizzochek/js_course.git"
+    "url": "https://github.com/lizzochek/js_course.git"
   },
   "keywords": [
     "cooking",
