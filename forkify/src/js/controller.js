@@ -2,6 +2,7 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
+import pagesView from "./views/pagesView.js";
 
 //ES5 compatibility
 import "core-js/stable";
@@ -36,14 +37,21 @@ const controlSearchResult = async () => {
 
     await model.loadSearchResults(query);
 
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResults());
+    pagesView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
 };
 
+const controlPages = (pageToGo) => {
+  resultsView.render(model.getSearchResults(pageToGo));
+  pagesView.render(model.state.search);
+};
+
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResult);
+  pagesView.addHandlerClick(controlPages);
 };
 init();
