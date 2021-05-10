@@ -49,8 +49,14 @@ const controlPages = (pageToGo) => {
   pagesView.render(model.state.search);
 };
 
+const controlServings = (newServing) => {
+  model.updateServings(newServing);
+  recipeView.render(model.state.recipe);
+};
+
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addServingsHandler(controlServings);
   searchView.addHandlerSearch(controlSearchResult);
   pagesView.addHandlerClick(controlPages);
 };
