@@ -95,3 +95,23 @@ const init = () => {
   if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();
+
+export const uploadRecipe = async (newRecipe) => {
+  try {
+    const ingredients = Object.entries(newRecipe)
+      .filter((entry) => entry[0].startsWith("ingredient") && entry[1] !== "")
+      .map((ing) => {
+        const ings = ing[1].replaceAll(" ", "").split(",");
+
+        if (ings.length !== 3)
+          throw new Error(
+            "Wrong ingredient format, use: quantity,unit,description "
+          );
+
+        const [quantity, unit, description] = ings;
+        return { quantity: quantity ? +quantity : null, unit, description };
+      });
+  } catch (err) {
+    throw err;
+  }
+};
