@@ -2,6 +2,7 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
+import bookmarksView from "./views/bookmarksView.js";
 import pagesView from "./views/pagesView.js";
 
 //ES5 compatibility
@@ -18,6 +19,8 @@ const controlRecipes = async () => {
     recipeView.renderSpinner();
 
     resultsView.update(model.getSearchResults());
+    bookmarksView.update(model.state.bookmarks);
+
     //Loading recipe
     await model.loadRecipe(id);
 
@@ -55,9 +58,18 @@ const controlServings = (newServing) => {
   recipeView.update(model.state.recipe);
 };
 
+const controlBookmark = () => {
+  !model.state.recipe.bookmarked
+    ? model.addBookmark(model.state.recipe)
+    : model.removeBookmark(model.state.recipe.id);
+
+  recipeView.update(model.state.recipe);
+  bookmarksView.render(model.state.bookmarks);
+};
 const init = () => {
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addServingsHandler(controlServings);
+  recipeView.addBookmarkHandler(controlBookmark);
   searchView.addHandlerSearch(controlSearchResult);
   pagesView.addHandlerClick(controlPages);
 };
