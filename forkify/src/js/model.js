@@ -31,7 +31,7 @@ const createRecipe = (data) => {
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await getJSON(`${API_URL}${id}?key=${KEY}`);
     state.recipe = createRecipe(data);
 
     state.recipe.bookmarked = state.bookmarks.some(
@@ -48,13 +48,14 @@ export const loadSearchResults = async (query) => {
   try {
     state.search.query = query;
 
-    const data = await getJSON(`${API_URL}?search=${query}`);
+    const data = await getJSON(`${API_URL}?search=${query}&key=${KEY}`);
     state.search.results = data.data.recipes.map((rec) => {
       return {
         id: rec.id,
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
+        key: rec.key ? rec.key : "",
       };
     });
     state.search.page = 1;
@@ -107,7 +108,7 @@ export const uploadRecipe = async (newRecipe) => {
     const ingredients = Object.entries(newRecipe)
       .filter((entry) => entry[0].startsWith("ingredient") && entry[1] !== "")
       .map((ing) => {
-        const ings = ing[1].replaceAll(" ", "").split(",");
+        const ings = ing[1].split(",").map((el) => el.trim());
 
         if (ings.length !== 3)
           throw new Error(

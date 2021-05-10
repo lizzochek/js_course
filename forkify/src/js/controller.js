@@ -78,6 +78,10 @@ const controlAddRecipe = async (recipe) => {
     recipeView.render(model.state.recipe);
     addRecipeView.renderMessage();
 
+    bookmarksView.render(model.state.bookmarks);
+
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
+
     setTimeout(() => addRecipeView.toggleWindow(), MODAL_CLOSE_TIME * 1000);
   } catch (err) {
     addRecipeView.renderError(err.message);
