@@ -86,7 +86,7 @@ class recipeView extends View {
   <div class="recipe__directions">
     <h2 class="heading--2">How to cook it</h2>
     <p class="recipe__directions-text">
-      This _data was carefully designed and tested by
+      This recipe was carefully designed and tested by
       <span class="recipe__publisher">${
         this._data.publisher
       }</span>. Please check out
