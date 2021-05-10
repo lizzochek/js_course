@@ -5,6 +5,7 @@ import resultsView from "./views/resultsView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import pagesView from "./views/pagesView.js";
 import addRecipeView from "./views/addRecipeView.js";
+import { MODAL_CLOSE_TIME } from "./config.js";
 
 //ES5 compatibility
 import "core-js/stable";
@@ -70,7 +71,14 @@ const controlBookmark = () => {
 
 const controlAddRecipe = async (recipe) => {
   try {
+    addRecipeView.renderSpinner();
+
     await model.uploadRecipe(recipe);
+
+    recipeView.render(model.state.recipe);
+    addRecipeView.renderMessage();
+
+    setTimeout(() => addRecipeView.toggleWindow(), MODAL_CLOSE_TIME * 1000);
   } catch (err) {
     addRecipeView.renderError(err.message);
   }

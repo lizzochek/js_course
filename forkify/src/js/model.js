@@ -15,6 +15,7 @@ export const state = {
 
 const createRecipe = (data) => {
   let { recipe } = data.data;
+
   return {
     id: recipe.id,
     title: recipe.title,
@@ -24,6 +25,7 @@ const createRecipe = (data) => {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
+    key: recipe.key ? recipe.key : "",
   };
 };
 
@@ -126,9 +128,11 @@ export const uploadRecipe = async (newRecipe) => {
       ingredients,
     };
 
-    sendJSON(`${API_URL}?key=${KEY}`, recipe);
+    const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
     state.recipe = createRecipe(data);
+    addBookmark(state.recipe);
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };
