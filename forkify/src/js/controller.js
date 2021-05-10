@@ -4,6 +4,7 @@ import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import pagesView from "./views/pagesView.js";
+import addRecipeView from "./views/addRecipeView.js";
 
 //ES5 compatibility
 import "core-js/stable";
@@ -67,6 +68,8 @@ const controlBookmark = () => {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlAddRecipe = (recipe) => {};
+
 const init = () => {
   bookmarksView.render(model.state.bookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -74,5 +77,6 @@ const init = () => {
   recipeView.addBookmarkHandler(controlBookmark);
   searchView.addHandlerSearch(controlSearchResult);
   pagesView.addHandlerClick(controlPages);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 init();
