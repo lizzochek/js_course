@@ -1,8 +1,14 @@
 "use strict";
 
 const bookings = [];
+const defaultPassengerNum = 1;
+const defaultPrice = 199;
 
-function createBooking(flightNum, passengersNum = 1, price = 199) {
+function createBooking(
+  flightNum,
+  passengersNum = defaultPassengerNum,
+  price = defaultPrice
+) {
   const booking = {
     flightNum,
     passengersNum,
@@ -164,26 +170,26 @@ const secureBooking = function () {
 
 const booker = secureBooking();
 
-let f;
+let innerFunction;
 
-const g = function () {
+const outerFunction1 = function () {
   const a = 23;
-  f = function () {
+  innerFunction = function () {
     console.log(a * 2);
   };
 };
 
-const h = function () {
+const outerFunction2 = function () {
   const b = 777;
-  f = function () {
+  innerFunction = function () {
     console.log(b * 2);
   };
 };
 
-g();
-f();
-h();
-f();
+outerFunction1();
+innerFunction();
+outerFunction2();
+innerFunction();
 
 const boardPassengers = function (n, wait) {
   const perGroup = n / 3;

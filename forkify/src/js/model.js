@@ -30,38 +30,28 @@ const createRecipe = (data) => {
 };
 
 export const loadRecipe = async function (id) {
-  try {
-    const data = await getJSON(`${API_URL}${id}?key=${KEY}`);
-    state.recipe = createRecipe(data);
+  const data = await getJSON(`${API_URL}${id}?key=${KEY}`);
+  state.recipe = createRecipe(data);
 
-    state.recipe.bookmarked = state.bookmarks.some(
-      (bookmark) => bookmark.id === id
-    )
-      ? true
-      : false;
-  } catch (err) {
-    throw err;
-  }
+  state.recipe.bookmarked = state.bookmarks.some(
+    (bookmark) => bookmark.id === id
+  );
 };
 
 export const loadSearchResults = async (query) => {
-  try {
-    state.search.query = query;
+  state.search.query = query;
 
-    const data = await getJSON(`${API_URL}?search=${query}&key=${KEY}`);
-    state.search.results = data.data.recipes.map((rec) => {
-      return {
-        id: rec.id,
-        title: rec.title,
-        publisher: rec.publisher,
-        image: rec.image_url,
-        key: rec.key ? rec.key : "",
-      };
-    });
-    state.search.page = 1;
-  } catch (err) {
-    throw err;
-  }
+  const data = await getJSON(`${API_URL}?search=${query}&key=${KEY}`);
+  state.search.results = data.data.recipes.map((rec) => {
+    return {
+      id: rec.id,
+      title: rec.title,
+      publisher: rec.publisher,
+      image: rec.image_url,
+      key: rec.key ? rec.key : "",
+    };
+  });
+  state.search.page = 1;
 };
 
 export const getSearchResults = (page = state.search.page) => {
@@ -104,36 +94,31 @@ const init = () => {
 init();
 
 export const uploadRecipe = async (newRecipe) => {
-  try {
-    const ingredients = Object.entries(newRecipe)
-      .filter((entry) => entry[0].startsWith("ingredient") && entry[1] !== "")
-      .map((ing) => {
-        const ings = ing[1].split(",").map((el) => el.trim());
+  const ingredients = Object.entries(newRecipe)
+    .filter((entry) => entry[0].startsWith("ingredient") && entry[1] !== "")
+    .map((ing) => {
+      const ings = ing[1].split(",").map((el) => el.trim());
 
-        if (ings.length !== 3)
-          throw new Error(
-            "Wrong ingredient format, use: quantity,unit,description "
-          );
+      if (ings.length !== 3)
+        throw new Error(
+          "Wrong ingredient format, use: quantity,unit,description "
+        );
 
-        const [quantity, unit, description] = ings;
+      const [quantity, unit, description] = ings;
 
-        return { quantity: quantity ? +quantity : null, unit, description };
-      });
-    const recipe = {
-      title: newRecipe.title,
-      source_url: newRecipe.sourceUrl,
-      image_url: newRecipe.image,
-      publisher: newRecipe.publisher,
-      cooking_time: +newRecipe.cookingTime,
-      servings: +newRecipe.servings,
-      ingredients,
-    };
+      return { quantity: quantity ? +quantity : null, unit, description };
+    });
+  const recipe = {
+    title: newRecipe.title,
+    source_url: newRecipe.sourceUrl,
+    image_url: newRecipe.image,
+    publisher: newRecipe.publisher,
+    cooking_time: +newRecipe.cookingTime,
+    servings: +newRecipe.servings,
+    ingredients,
+  };
 
-    const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
-    state.recipe = createRecipe(data);
-    addBookmark(state.recipe);
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
+  const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
+  state.recipe = createRecipe(data);
+  addBookmark(state.recipe);
 };
