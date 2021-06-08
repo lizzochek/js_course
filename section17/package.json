@@ -1,0 +1,22 @@
+{
+  "name": "section17",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "Yelyzaveta Dolhova",
+  "license": "MIT",
+  "dependencies": {
+    "core-js": "^3.11.2",
+    "leaflet": "^1.7.1",
+    "lodash-es": "^4.17.21",
+    "regenerator": "^0.14.7",
+    "runtime": "^0.9.10"
+  },
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2"
+  }
+}

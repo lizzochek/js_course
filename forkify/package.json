@@ -1,0 +1,32 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe app",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lizzochek/js_course.git"
+  },
+  "keywords": [
+    "cooking",
+    "food",
+    "recipe"
+  ],
+  "author": "Yelyzaveta Dolhova",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lizzochek/js_course/issues"
+  },
+  "homepage": "https://github.com/lizzochek/js_course#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2"
+  },
+  "dependencies": {
+    "core-js": "^3.11.2",
+    "regenerator-runtime": "^0.13.7"
+  }
+}
